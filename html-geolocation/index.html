@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>HTML Geolocation</title>
+    </head>
+    <body>
+        <p>Klik tombol untuk memperolehkan koordinasi Anda.</p>
+
+        <button onclick="getLocation()">Coba</button>
+
+        <p id="demo"></p>
+
+        <script>
+            var x = document.getElementById("demo");
+
+            //basic geolocation without an exception
+            function getLocation() {
+                if(navigator.geolocation){
+                    //navigator.geolocation.getCurrentPosition(showPosition); //getCurrentPosition method
+                    navigator.geolocation.watchPosition(showPosition); //watchPosition method
+                }else{
+                    x.innerHTML = "Maaf, Geolocation tidak didukung oleh browser ini.";
+                }
+            }
+
+            //showposition() untuk menunjukkan posisi anda saat ini
+            function showPosition(position) {
+                x.innerHTML = "Garis lintang: " + position.coords.latitude + "<br>Garis bujur: " + position.coords.longitude;
+            }
+
+            //menujukan kesalahan
+            function showError(error){
+                switch(error.code){
+                    case error.PERMISSION_DENIED:
+                        x.innerHTML = "Pengguna telah menolak permintaan untuk Geolocation."
+                        break;
+                    case error.POSITION_UNAVAILABLE:
+                        x.innerHTML = "Informasi untuk lokasi tidak tersedia."
+                        break;
+                    case error.TIMEOUT:
+                        x.innerHTML = "Permintaan untuk memperolehkan lokasi pengguna saat waktu abis."
+                        break;
+                    case error.UNKNOWN_ERROR:
+                        x.innerHTML = "Error tidak diketahui telah terjadi."
+                        break;
+                }
+            }
+        </script>
+    </body>
+</html>
